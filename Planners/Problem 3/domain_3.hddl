@@ -11,28 +11,22 @@
     (at ?o - object ?l - location)
     (connected ?l1 ?l2 - location)
     
-    ;; Gestione Inventario
     (holding ?a - agent ?i - item)
     (load ?a - agent ?c - count)         
     (next ?c1 ?c2 - count)               
     (capacity-ok ?a - agent ?c - count)  
     
-    ;; Proprietà Oggetti
     (inside ?art - item ?p - item)
     (empty ?p - item)
     (transportable ?i - item)      
     
-    ;; Ambiente
     (seismic-active ?l - location) 
     (blocked ?a - agent) 
 
-    ;; --- NUOVI PREDICATI PER RAFFREDDAMENTO ---
     (needs-cooling ?i - item)
     (cooled ?i - item)
   )
 
-  ;; --- AZIONI PRIMITIVE ---
-  
   (:action move-freely
     :parameters (?a - agent ?from ?to - location)
     :precondition (and 
@@ -105,18 +99,15 @@
     )
   )
 
-  ;; --- NUOVA AZIONE DI RAFFREDDAMENTO ---
   (:action cool-down
     :parameters (?a - agent ?i - item)
     :precondition (and 
-        (holding ?a ?i)       ;; Devi averlo in mano
-        (needs-cooling ?i)    ;; Deve richiedere raffreddamento
-        (not (cooled ?i))     ;; Non lo raffreddiamo due volte
+        (holding ?a ?i)       
+        (needs-cooling ?i)    
+        (not (cooled ?i))     
     )
     :effect (cooled ?i)
   )
-
-  ;; --- TASKS ---
 
   (:task get_to
     :parameters (?a - agent ?to - location)
@@ -134,9 +125,6 @@
     :parameters (?a - agent ?art - item ?pod - pod ?art_loc - location ?pod_loc - location ?dest - location ?pod_home - location ?c0 ?c1 ?c2 - count)
   )
 
-  ;; --- METHODS ---
-
-  ;; 1. NAVIGAZIONE RICORSIVA
   (:method m_already_there
     :parameters (?a - agent ?l - location)
     :task (get_to ?a ?l)
@@ -169,12 +157,10 @@
     :subtasks (move-carrying ?a ?from ?to)
   )
 
-  ;; 2. CONSEGNA STANDARD
-  ;; Caso A: Oggetto NORMALE (NON richiede raffreddamento)
   (:method m_deliver_std
     :parameters (?a - agent ?item - item ?from - location ?to - location ?c0 ?c1 - count)
     :task (deliver_standard ?a ?item ?from ?to ?c0 ?c1)
-    :precondition (not (needs-cooling ?item))  ;; <--- VINCOLO
+    :precondition (not (needs-cooling ?item))
     :subtasks (and
       (t1 (get_to ?a ?from))
       (t2 (pick-up ?a ?item ?from ?c0 ?c1))
@@ -184,23 +170,20 @@
     :ordering (and (t1 < t2) (t2 < t3) (t3 < t4))
   )
 
-  ;; Caso B: Oggetto SENSIBILE (RICHIEDE raffreddamento)
-  ;; Sequenza forzata: Pick -> COOL -> Move -> Drop
   (:method m_deliver_std_cooled
     :parameters (?a - agent ?item - item ?from - location ?to - location ?c0 ?c1 - count)
     :task (deliver_standard ?a ?item ?from ?to ?c0 ?c1)
-    :precondition (needs-cooling ?item)         ;; <--- VINCOLO
+    :precondition (needs-cooling ?item)
     :subtasks (and
       (t1 (get_to ?a ?from))
       (t2 (pick-up ?a ?item ?from ?c0 ?c1))
-      (t3 (cool-down ?a ?item))                 ;; <--- AZIONE AGGIUNTA
+      (t3 (cool-down ?a ?item))              
       (t4 (get_to ?a ?to))
       (t5 (drop ?a ?item ?to ?c1 ?c0))
     )
     :ordering (and (t1 < t2) (t2 < t3) (t3 < t4) (t4 < t5))
   )
 
-  ;; 3. CONSEGNA FRAGILE
   (:method m_deliver_frag
     :parameters (?a - agent ?art - item ?pod - pod ?art_loc - location ?pod_loc - location ?dest - location ?pod_home - location ?c0 ?c1 ?c2 - count)
     :task (deliver_fragile ?a ?art ?pod ?art_loc ?pod_loc ?dest ?pod_home ?c0 ?c1 ?c2)

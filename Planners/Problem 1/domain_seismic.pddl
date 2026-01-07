@@ -23,13 +23,11 @@
     (cooled ?i - item)
   )
 
-  ;; --- AZIONE AGGIUNTA PER GESTIRE LA SISMICITÀ ---
   (:action wait-for-stability
     :parameters (?l - location)
     :precondition (seismic-active ?l)
     :effect (not (seismic-active ?l))
   )
-  ;; -----------------------------------------------
 
   (:action move-empty
     :parameters (?r - robot ?from ?to - location)

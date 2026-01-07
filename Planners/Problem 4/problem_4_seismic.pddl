@@ -14,16 +14,16 @@
 )
 
 (:init
-    ;; --- TIMED INITIAL LITERALS (Sisma) ---
+    ; Safety TILs
     (safe entrance) (safe tunnel) 
     (safe hall_a) (safe hall_b) 
     (safe cryo) (safe stasis) (safe pods_room)
 
-    ;; Hall B diventa pericolosa tra T=20 e T=60
+    ; Seismic Window: Hall B unsafe from T=20 to T=60
     (at 20 (not (safe hall_b)))
     (at 60 (safe hall_b))
     
-    ;; Topologia
+    ; Topology
     (connected entrance tunnel) (connected tunnel entrance)
     (connected tunnel hall_a) (connected hall_a tunnel)
     (connected tunnel hall_b) (connected hall_b tunnel)
@@ -31,7 +31,7 @@
     (connected tunnel stasis) (connected stasis tunnel)
     (connected tunnel pods_room) (connected pods_room tunnel)
     
-    ;; Posizioni
+    ; Locations
     (at drone1 entrance)
     (at curator entrance)
     
@@ -42,31 +42,28 @@
     (at pod1 pods_room)
     (at pod2 pods_room)
     
-    ;; Capacità e Stato Iniziale Robot
+    ; Load Management
     (load drone1 n0)
     (load curator n0)
     
     (next n0 n1)
     (next n1 n2)
 
-    ;; --- FIX CRUCIALE: DEFINIRE TUTTI I LIVELLI DI CAPACITÀ ---
-    (capacity-ok drone1 n1)  ;; Il drone può portare 1 oggetto
+    (capacity-ok drone1 n1)  
+    (capacity-ok curator n1) 
+    (capacity-ok curator n2) 
     
-    (capacity-ok curator n1) ;; Il curatore può portare 1 oggetto...
-    (capacity-ok curator n2) ;; ...e anche 2 oggetti!
-    
-    ;; Stato Pod
     (empty pod1)
     (empty pod2)
     
-    ;; Proprietà Oggetti
+    ; Transportability Constraints
     (transportable art_alpha)
     (transportable mars_core)
-    (transportable art_beta) ;; FIX: Rendiamo art_beta prendibile
     (transportable pod1)
     (transportable pod2)
+    ; NOTA CRITICA: art_beta NON è transportable (deve usare il pod)
     
-    ;; Necessità
+    ; Properties
     (needs-cooling art_alpha)
     (has-cooling curator)
 )
@@ -77,6 +74,9 @@
     (at art_alpha cryo)
     (at mars_core stasis)
     (at curator entrance)
+    (at pod1 pods_room)
+    (at pod2 pods_room)
+    (at drone1 entrance)
 ))
 
 (:metric minimize (total-time))

@@ -1,0 +1,39 @@
+gantt
+    title Problem 4 (Seismic) Plan Execution using LPG-TD
+    dateFormat  mm:ss
+    axisFormat  %M:%S
+    
+    section Drone1
+    Move Entrance -> Tunnel      :active,  00:00, 10s
+    Move Tunnel -> Cryo          :         00:10, 10s
+    Pick Mars_Core (Cryo)        :crit,    00:20, 5s
+    Move Cryo -> Tunnel          :         00:25, 10s
+    Move Tunnel -> Stasis        :         00:35, 10s
+    Drop Mars_Core (Stasis)      :crit,    00:45, 5s
+    Move Stasis -> Tunnel        :         00:50, 10s
+    Pick Art_Alpha (Tunnel)      :crit,    01:00, 5s
+    Move Tunnel -> Cryo          :         01:05, 10s
+    Drop Art_Alpha (Cryo)        :crit,    01:15, 5s
+    Move Cryo -> Tunnel          :         01:20, 10s
+    Move Tunnel -> Entrance      :         01:30, 10s
+
+    section Curator
+    Move Entrance -> Tunnel      :active,  00:00, 10s
+    Move Tunnel -> Hall_A        :         00:10, 10s
+    Pick Art_Alpha (Hall_A)      :crit,    00:20, 5s
+    Move Hall_A -> Tunnel        :         00:25, 10s
+    Cool Down Alpha (Tunnel)     :crit,    00:35, 5s
+    Drop Art_Alpha (Tunnel)      :crit,    00:40, 5s
+    Move Tunnel -> Pods_Room     :         00:45, 10s
+    Pick Pod2 (Pods_Room)        :crit,    00:55, 5s
+    Move Pods_Room -> Tunnel     :         01:00, 10s
+    Move Tunnel -> Hall_B        :         01:10, 10s
+    Load Art_Beta (Hall_B)       :crit,    01:20, 8s
+    Move Hall_B -> Tunnel        :         01:28, 10s
+    Move Tunnel -> Stasis        :         01:38, 10s
+    Unload Art_Beta (Stasis)     :crit,    01:48, 8s
+    Move Stasis -> Tunnel        :         01:56, 10s
+    Move Tunnel -> Pods_Room     :         02:06, 10s
+    Drop Pod2 (Pods_Room)        :crit,    02:16, 5s
+    Move Pods_Room -> Tunnel     :         02:21, 10s
+    Move Tunnel -> Entrance      :         02:31, 10s

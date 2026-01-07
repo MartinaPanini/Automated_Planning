@@ -1,6 +1,9 @@
 (define (domain imv_temporal)
   (:requirements :strips :typing :durative-actions)
-  (:types location count obj)
+  (:types location count obj - object
+          rover - obj
+          artifact pod - obj)
+  
   (:predicates
     (at ?o - obj ?l - location)
     (connected ?l1 ?l2 - location)
@@ -12,16 +15,15 @@
     (empty ?p - obj)
     (transportable ?i - obj)
     (fragile ?i - obj)
-    (safe-location ?l - location)
     (ready ?a - obj)
     (movement-allowed ?a - obj)
-    (seismic-safe ?l - location)
     (has-cooling ?a - obj)
     (needs-cooling ?i - obj)
+    (cooled ?i - obj) ; AGGIUNTO per logica positiva
   )
 
   (:durative-action move
-    :parameters (?a - obj ?from - location ?to - location)
+    :parameters (?a - rover ?from - location ?to - location)
     :duration (= ?duration 10)
     :condition (and
         (at start (ready ?a))
@@ -38,7 +40,7 @@
   )
 
   (:durative-action pick_up_secure
-    :parameters (?a - obj ?i - obj ?l - location ?c_pre - count ?c_post - count)
+    :parameters (?a - rover ?i - artifact ?l - location ?c_pre - count ?c_post - count)
     :duration (= ?duration 5)
     :condition (and
         (at start (ready ?a))
@@ -48,7 +50,6 @@
         (at start (load ?a ?c_pre))
         (over all (next ?c_pre ?c_post))
         (over all (capacity-ok ?a ?c_post))
-        (at start (safe-location ?l))
         (over all (transportable ?i))
         (over all (has-cooling ?a))
     )
@@ -61,9 +62,31 @@
         (at end (load ?a ?c_post))
     )
   )
+  
+  (:durative-action pick_up_pod
+    :parameters (?a - rover ?p - pod ?l - location ?c_pre - count ?c_post - count)
+    :duration (= ?duration 5)
+    :condition (and
+        (at start (ready ?a))
+        (at start (at ?a ?l))
+        (over all (at ?a ?l))
+        (at start (at ?p ?l))
+        (at start (load ?a ?c_pre))
+        (over all (next ?c_pre ?c_post))
+        (over all (capacity-ok ?a ?c_post))
+    )
+    :effect (and
+        (at start (not (ready ?a)))
+        (at end (ready ?a))
+        (at start (not (at ?p ?l)))
+        (at end (holding ?a ?p))
+        (at start (not (load ?a ?c_pre)))
+        (at end (load ?a ?c_post))
+    )
+  )
 
   (:durative-action pick_up_fragile
-    :parameters (?a - obj ?i - obj ?p - obj ?l - location ?c_pre - count ?c_post - count)
+    :parameters (?a - rover ?i - artifact ?p - pod ?l - location ?c_pre - count ?c_post - count)
     :duration (= ?duration 5)
     :condition (and
         (at start (ready ?a))
@@ -73,11 +96,9 @@
         (at start (load ?a ?c_pre))
         (over all (next ?c_pre ?c_post))
         (over all (capacity-ok ?a ?c_post))
-        (at start (safe-location ?l))
         (over all (fragile ?i))
         (over all (holding ?a ?p))
         (at start (empty ?p))
-        (at start (seismic-safe ?l))
     )
     :effect (and
         (at start (not (ready ?a)))
@@ -91,7 +112,7 @@
   )
 
   (:durative-action drop_secure
-    :parameters (?a - obj ?i - obj ?l - location ?c_pre - count ?c_post - count)
+    :parameters (?a - rover ?i - obj ?l - location ?c_pre - count ?c_post - count)
     :duration (= ?duration 5)
     :condition (and
         (at start (ready ?a))
@@ -113,7 +134,7 @@
   )
 
   (:durative-action drop_fragile
-    :parameters (?a - obj ?i - obj ?l - location ?c_pre - count ?c_post - count)
+    :parameters (?a - rover ?i - artifact ?l - location ?c_pre - count ?c_post - count)
     :duration (= ?duration 5)
     :condition (and
         (at start (ready ?a))
@@ -136,7 +157,7 @@
   )
 
   (:durative-action load_pod
-    :parameters (?a - obj ?art - obj ?pod - obj ?l - location ?c_pre - count ?c_post - count)
+    :parameters (?a - rover ?art - artifact ?pod - pod ?l - location ?c_pre - count ?c_post - count)
     :duration (= ?duration 5)
     :condition (and
         (at start (ready ?a))
@@ -147,7 +168,6 @@
         (at start (empty ?pod))
         (at start (load ?a ?c_pre))
         (over all (next ?c_post ?c_pre))
-        (at start (safe-location ?l))
     )
     :effect (and
         (at start (not (ready ?a)))
@@ -162,7 +182,7 @@
   )
 
   (:durative-action unload_pod_secure
-    :parameters (?a - obj ?art - obj ?pod - obj ?l - location ?c_pre - count ?c_post - count)
+    :parameters (?a - rover ?art - artifact ?pod - pod ?l - location ?c_pre - count ?c_post - count)
     :duration (= ?duration 5)
     :condition (and
         (at start (ready ?a))
@@ -173,7 +193,6 @@
         (at start (load ?a ?c_pre))
         (over all (next ?c_pre ?c_post))
         (over all (capacity-ok ?a ?c_post))
-        (at start (safe-location ?l))
         (over all (transportable ?art))
     )
     :effect (and
@@ -188,7 +207,7 @@
   )
 
   (:durative-action unload_pod_fragile
-    :parameters (?a - obj ?art - obj ?pod - obj ?l - location ?c_pre - count ?c_post - count)
+    :parameters (?a - rover ?art - artifact ?pod - pod ?l - location ?c_pre - count ?c_post - count)
     :duration (= ?duration 5)
     :condition (and
         (at start (ready ?a))
@@ -199,7 +218,6 @@
         (at start (load ?a ?c_pre))
         (over all (next ?c_pre ?c_post))
         (over all (capacity-ok ?a ?c_post))
-        (at start (safe-location ?l))
         (over all (fragile ?art))
     )
     :effect (and
@@ -214,15 +232,13 @@
     )
   )
 
-  ;; --- NUOVA AZIONE ---
   (:durative-action cool_down
-    :parameters (?a - obj ?i - obj ?l - location)
+    :parameters (?a - rover ?i - artifact ?l - location)
     :duration (= ?duration 5)
     :condition (and
         (at start (ready ?a))
         (at start (at ?a ?l))
         (over all (at ?a ?l))
-        (at start (holding ?a ?i))
         (over all (holding ?a ?i))
         (over all (has-cooling ?a))
         (at start (needs-cooling ?i))
@@ -231,6 +247,7 @@
         (at start (not (ready ?a)))
         (at end (ready ?a))
         (at end (not (needs-cooling ?i)))
+        (at end (cooled ?i)) ; AGGIUNTO: Effetto positivo
     )
   )
 )

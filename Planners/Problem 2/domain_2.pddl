@@ -1,7 +1,5 @@
 (define (domain imv-multi-agent)
   (:requirements :strips :typing :negation :disjunctive-preconditions) 
-  ;; Rimossi conditional-effects, universal-preconditions e existential-preconditions
-
   (:types
     location item agent count - object
     robot drone - agent
@@ -19,13 +17,12 @@
     (empty ?p - item)
     (transportable ?i - item)      
     (seismic-active ?l - location) 
-    (blocked ?a - agent)       ;; Blocco fisico (oggetto fragile)
-    (temp-blocked ?a - agent)  ;; Blocco termico (oggetto caldo)
+    (blocked ?a - agent)      
+    (temp-blocked ?a - agent) 
     (needs-cooling ?a - artifact) 
     (cooled ?a - artifact)        
   )
 
-  ;; --- MOVIMENTO ---
   (:action move-freely
     :parameters (?a - agent ?from ?to - location)
     :precondition (and 
@@ -48,9 +45,6 @@
     :effect (and (not (at ?a ?from)) (at ?a ?to))
   )
 
-  ;; --- RACCOLTA (SPLIT ACTIONS) ---
-  
-  ;; Caso 1: Oggetto Standard (Transportable E (Freddo O Già Raffreddato))
   (:action pick-up-standard
     :parameters (?a - agent ?i - item ?l - location ?c_pre ?c_post - count)
     :precondition (and 
@@ -66,7 +60,6 @@
     )
   )
 
-  ;; Caso 2: Oggetto Caldo (Transportable MA Needs-Cooling e NOT Cooled)
   (:action pick-up-hot
     :parameters (?a - agent ?i - item ?l - location ?c_pre ?c_post - count)
     :precondition (and 
@@ -80,11 +73,10 @@
     :effect (and 
         (not (at ?i ?l)) (holding ?a ?i)
         (not (load ?a ?c_pre)) (load ?a ?c_post)
-        (temp-blocked ?a) ;; Ti scotti le mani -> non ti muovi
+        (temp-blocked ?a) 
     )
   )
 
-  ;; Caso 3: Oggetto Fragile (NON Transportable)
   (:action pick-up-fragile
     :parameters (?a - agent ?i - item ?l - location ?c_pre ?c_post - count ?p - pod)
     :precondition (and 
@@ -92,19 +84,15 @@
         (load ?a ?c_pre) (next ?c_pre ?c_post) (capacity-ok ?a ?c_post)
         (not (seismic-active ?l))
         (not (transportable ?i))
-        ;; Vincolo Pod: Devi avere un pod vuoto in mano
         (holding ?a ?p) (empty ?p)
     )
     :effect (and 
         (not (at ?i ?l)) (holding ?a ?i)
         (not (load ?a ?c_pre)) (load ?a ?c_post)
-        (blocked ?a) ;; Fragile -> non ti muovi
+        (blocked ?a) 
     )
   )
-
-  ;; --- RILASCIO (SPLIT ACTIONS) ---
   
-  ;; Rilascio Standard (Non rimuove blocchi perché non ce n'erano)
   (:action drop-standard
     :parameters (?a - agent ?i - item ?l - location ?c_pre ?c_post - count)
     :precondition (and 
@@ -119,7 +107,6 @@
     )
   )
 
-  ;; Rilascio Oggetto Caldo (Rimuove temp-blocked)
   (:action drop-hot
     :parameters (?a - agent ?i - item ?l - location ?c_pre ?c_post - count)
     :precondition (and 
@@ -135,7 +122,6 @@
     )
   )
 
-  ;; Rilascio Oggetto Fragile (Rimuove blocked)
   (:action drop-fragile
     :parameters (?a - agent ?i - item ?l - location ?c_pre ?c_post - count)
     :precondition (and 
@@ -150,8 +136,6 @@
     )
   )
 
-  ;; --- GESTIONE POD ---
-
   (:action load-pod
     :parameters (?a - agent ?art - item ?pod - item ?l - location ?c_pre ?c_post - count)
     :precondition (and 
@@ -164,12 +148,10 @@
         (not (empty ?pod)) 
         (inside ?art ?pod)
         (not (load ?a ?c_pre)) (load ?a ?c_post)
-        (not (blocked ?a)) ;; Loading rimuove sempre il blocco fisico
+        (not (blocked ?a)) 
     )
   )
 
-  ;; Unload Split: Standard vs Fragile
-  
   (:action unload-pod-standard
     :parameters (?a - agent ?art - item ?pod - item ?l - location ?c_pre ?c_post - count)
     :precondition (and 
@@ -177,7 +159,7 @@
         (inside ?art ?pod)
         (load ?a ?c_pre) (next ?c_pre ?c_post) (capacity-ok ?a ?c_post) 
         (not (seismic-active ?l))
-        (transportable ?art) ;; Se è robusto
+        (transportable ?art)
     )
     :effect (and 
         (holding ?a ?art)
@@ -193,17 +175,16 @@
         (inside ?art ?pod)
         (load ?a ?c_pre) (next ?c_pre ?c_post) (capacity-ok ?a ?c_post) 
         (not (seismic-active ?l))
-        (not (transportable ?art)) ;; Se è fragile
+        (not (transportable ?art)) 
     )
     :effect (and 
         (holding ?a ?art)
         (empty ?pod) (not (inside ?art ?pod))
         (not (load ?a ?c_pre)) (load ?a ?c_post)
-        (blocked ?a) ;; Diventi bloccato
+        (blocked ?a) 
     )
   )
 
-  ;; --- RAFFREDDAMENTO ---
   (:action cool-down
     :parameters (?ag - agent ?a - artifact ?l - location)
     :precondition (and 
@@ -214,7 +195,7 @@
     )
     :effect (and 
         (cooled ?a)
-        (not (temp-blocked ?ag)) ;; Rimuove il blocco termico
+        (not (temp-blocked ?ag)) 
     )
   )
 )

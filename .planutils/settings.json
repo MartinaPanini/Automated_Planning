@@ -1,1 +1,1 @@
-{"installed": ["downward", "lama-first", "panda"], "PAAS_SERVER": "https://paas-uom.org:5001", "PAAS_SERVER_LIMIT": 100}
+{"installed": ["downward", "lama-first", "panda", "lpg-td", "optic"], "PAAS_SERVER": "https://paas-uom.org:5001", "PAAS_SERVER_LIMIT": 100}
