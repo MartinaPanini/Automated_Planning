@@ -1,0 +1,16 @@
+{
+   "schemaVersion": 2,
+   "mediaType": "application/vnd.oci.image.index.v1+json",
+   "manifests": [
+      {
+         "mediaType": "application/vnd.docker.distribution.manifest.v2+json",
+         "size": 1998,
+         "digest": "sha256:99eb54a2e55c76eb950f53a78899c9f5800f138ff604b6a657b5f977623bfd4d"
+      },
+      {
+         "mediaType": "application/vnd.docker.distribution.manifest.v2+json",
+         "size": 1574,
+         "digest": "sha256:1a39646c43eed4601801e12b516af84746ae71601a068bae6c882b3ae89c6627"
+      }
+   ]
+}

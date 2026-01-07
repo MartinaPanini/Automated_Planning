@@ -1,4 +1,3 @@
-(wait-for-stability hall_b)
 (move-empty curator entrance tunnel)
 (move-empty curator tunnel hall_a)
 (pick-up curator art_alpha hall_a)
@@ -26,4 +25,4 @@
 (drop curator art_beta stasis)
 (move-empty curator stasis tunnel)
 (move-empty curator tunnel entrance)
-; cost = 28 (unit cost)
+; cost = 27 (unit cost)
