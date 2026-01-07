@@ -1,0 +1,936 @@
+;; #state features
+35
++at[curator,entrance]
++load[curator,n0]
++at[drone1,entrance]
++load[drone1,n0]
++at[art_alpha,hall_a]
++at[art_beta,hall_b]
++at[mars_core,cryo]
++at[pod1,pods_room]
++empty[pod1]
+-blocked[drone1]
+-cooled[art_alpha]
++at[curator,tunnel]
++at[drone1,tunnel]
++at[curator,hall_a]
++at[curator,hall_b]
++at[curator,cryo]
++at[curator,stasis]
++at[curator,pods_room]
++at[drone1,hall_a]
++at[drone1,hall_b]
++at[drone1,cryo]
++at[drone1,stasis]
++at[drone1,pods_room]
++holding[curator,art_alpha]
+-load[curator,n0]
++load[curator,n1]
++holding[drone1,mars_core]
+-load[drone1,n0]
++load[drone1,n1]
++holding[drone1,pod1]
++holding[drone1,art_beta]
++load[drone1,n2]
++at[pod1,stasis]
++at[pod1,hall_b]
++inside[art_beta,pod1]
+
+;; Mutex Groups
+35
+0 0 +at[curator,entrance]
+1 1 +load[curator,n0]
+2 2 +at[drone1,entrance]
+3 3 +load[drone1,n0]
+4 4 +at[art_alpha,hall_a]
+5 5 +at[art_beta,hall_b]
+6 6 +at[mars_core,cryo]
+7 7 +at[pod1,pods_room]
+8 8 +empty[pod1]
+9 9 -blocked[drone1]
+10 10 -cooled[art_alpha]
+11 11 +at[curator,tunnel]
+12 12 +at[drone1,tunnel]
+13 13 +at[curator,hall_a]
+14 14 +at[curator,hall_b]
+15 15 +at[curator,cryo]
+16 16 +at[curator,stasis]
+17 17 +at[curator,pods_room]
+18 18 +at[drone1,hall_a]
+19 19 +at[drone1,hall_b]
+20 20 +at[drone1,cryo]
+21 21 +at[drone1,stasis]
+22 22 +at[drone1,pods_room]
+23 23 +holding[curator,art_alpha]
+24 24 -load[curator,n0]
+25 25 +load[curator,n1]
+26 26 +holding[drone1,mars_core]
+27 27 -load[drone1,n0]
+28 28 +load[drone1,n1]
+29 29 +holding[drone1,pod1]
+30 30 +holding[drone1,art_beta]
+31 31 +load[drone1,n2]
+32 32 +at[pod1,stasis]
+33 33 +at[pod1,hall_b]
+34 34 +inside[art_beta,pod1]
+
+;; further strict Mutex Groups
+0
+
+;; further non strict Mutex Groups
+0
+
+;; known invariants
+0
+
+;; Actions
+85
+1
+32 3 21 34 -1
+0 28  0 27  0 8  0 30  -1
+0 9  0 3  0 34  -1
+1
+33 19 28 8 30 -1
+0 9  0 3  0 34  -1
+0 27  0 28  0 8  0 30  -1
+1
+22 28 29 -1
+0 3  0 7  -1
+0 27  0 28  0 29  -1
+1
+32 21 3 -1
+0 28  0 27  0 29  -1
+0 3  0 32  -1
+1
+32 21 8 3 29 -1
+0 28  0 27  0 29  -1
+0 3  0 32  -1
+1
+21 28 30 -1
+0 9  0 3  -1
+0 27  0 28  0 30  -1
+1
+21 28 29 -1
+0 3  0 32  -1
+0 27  0 28  0 29  -1
+1
+33 19 3 -1
+0 28  0 27  0 29  -1
+0 3  0 33  -1
+1
+33 19 8 3 29 -1
+0 28  0 27  0 29  -1
+0 3  0 33  -1
+1
+19 31 29 -1
+0 28  0 33  -1
+0 31  0 29  -1
+1
+5 19 8 28 29 -1
+0 31  0 30  -1
+0 9  0 28  0 5  -1
+1
+7 22 3 -1
+0 28  0 27  0 29  -1
+0 3  0 7  -1
+1
+7 22 8 3 29 -1
+0 28  0 27  0 29  -1
+0 3  0 7  -1
+0
+22 -1
+-1
+-1
+0
+20 -1
+-1
+-1
+1
+20 3 -1
+0 12  -1
+0 20  -1
+0
+3 -1
+-1
+-1
+1
+20 9 27 -1
+0 12  -1
+0 20  -1
+0
+27 -1
+-1
+-1
+0
+18 -1
+-1
+-1
+1
+18 3 -1
+0 12  -1
+0 18  -1
+1
+18 9 27 -1
+0 12  -1
+0 18  -1
+0
+19 -1
+-1
+-1
+1
+19 3 -1
+0 12  -1
+0 19  -1
+1
+19 9 27 -1
+0 12  -1
+0 19  -1
+0
+12 -1
+-1
+-1
+1
+12 3 -1
+0 22  -1
+0 12  -1
+1
+12 9 27 -1
+0 22  -1
+0 12  -1
+1
+12 3 -1
+0 21  -1
+0 12  -1
+1
+12 9 27 -1
+0 21  -1
+0 12  -1
+1
+12 3 -1
+0 20  -1
+0 12  -1
+1
+12 9 27 -1
+0 20  -1
+0 12  -1
+1
+12 3 -1
+0 19  -1
+0 12  -1
+1
+12 9 27 -1
+0 19  -1
+0 12  -1
+1
+12 3 -1
+0 18  -1
+0 12  -1
+1
+12 9 27 -1
+0 18  -1
+0 12  -1
+1
+12 3 -1
+0 2  -1
+0 12  -1
+1
+12 9 27 -1
+0 2  -1
+0 12  -1
+0
+21 -1
+-1
+-1
+1
+21 3 -1
+0 12  -1
+0 21  -1
+1
+21 9 27 -1
+0 12  -1
+0 21  -1
+1
+22 3 -1
+0 12  -1
+0 22  -1
+1
+22 9 27 -1
+0 12  -1
+0 22  -1
+0
+2 -1
+-1
+-1
+1
+2 3 -1
+0 12  -1
+0 2  -1
+1
+2 9 27 -1
+0 12  -1
+0 2  -1
+1
+21 28 26 -1
+0 3  -1
+0 27  0 28  0 26  -1
+1
+6 20 3 -1
+0 28  0 27  0 26  -1
+0 3  0 6  -1
+1
+6 20 8 3 29 -1
+0 28  0 27  0 26  -1
+0 3  0 6  -1
+1
+15 25 23 -1
+0 1  -1
+0 24  0 25  0 23  -1
+1
+4 13 1 -1
+0 25  0 24  0 23  -1
+0 1  0 4  -1
+0
+15 -1
+-1
+-1
+1
+15 1 -1
+0 11  -1
+0 15  -1
+0
+1 -1
+-1
+-1
+1
+15 24 -1
+0 11  -1
+0 15  -1
+0
+24 -1
+-1
+-1
+0
+14 -1
+-1
+-1
+1
+14 1 -1
+0 11  -1
+0 14  -1
+1
+14 24 -1
+0 11  -1
+0 14  -1
+0
+16 -1
+-1
+-1
+1
+16 1 -1
+0 11  -1
+0 16  -1
+1
+16 24 -1
+0 11  -1
+0 16  -1
+0
+13 -1
+-1
+-1
+1
+13 1 -1
+0 11  -1
+0 13  -1
+1
+13 24 -1
+0 11  -1
+0 13  -1
+0
+17 -1
+-1
+-1
+1
+17 1 -1
+0 11  -1
+0 17  -1
+1
+17 24 -1
+0 11  -1
+0 17  -1
+0
+11 -1
+-1
+-1
+1
+11 1 -1
+0 17  -1
+0 11  -1
+1
+11 24 -1
+0 17  -1
+0 11  -1
+0
+0 -1
+-1
+-1
+1
+0 1 -1
+0 11  -1
+0 0  -1
+1
+0 24 -1
+0 11  -1
+0 0  -1
+1
+11 1 -1
+0 16  -1
+0 11  -1
+1
+11 24 -1
+0 16  -1
+0 11  -1
+1
+11 1 -1
+0 15  -1
+0 11  -1
+1
+11 24 -1
+0 15  -1
+0 11  -1
+1
+11 1 -1
+0 14  -1
+0 11  -1
+1
+11 24 -1
+0 14  -1
+0 11  -1
+1
+11 1 -1
+0 13  -1
+0 11  -1
+1
+11 24 -1
+0 13  -1
+0 11  -1
+1
+11 1 -1
+0 0  -1
+0 11  -1
+1
+11 24 -1
+0 0  -1
+0 11  -1
+1
+10 23 -1
+-1
+0 10  -1
+
+;; initial state
+9 4 8 3 7 2 6 1 10 5 0 -1
+
+;; goal
+-1
+
+;; tasks (primitive and abstract)
+122
+0 unload-pod|instance_1[drone1,art_beta,pod1,stasis,n0,n1]
+0 load-pod[drone1,art_beta,pod1,hall_b,n1,n0]
+0 drop|instance_2[drone1,pod1,pods_room,n1,n0]
+0 pick-up|instance_3[drone1,pod1,stasis,n0,n1]
+0 pick-up|instance_4[drone1,pod1,stasis,n0,n1]
+0 drop|instance_1[drone1,art_beta,stasis,n1,n0]
+0 drop|instance_2[drone1,pod1,stasis,n1,n0]
+0 pick-up|instance_3[drone1,pod1,hall_b,n0,n1]
+0 pick-up|instance_4[drone1,pod1,hall_b,n0,n1]
+0 drop|instance_2[drone1,pod1,hall_b,n2,n1]
+0 pick-up|instance_2[drone1,art_beta,hall_b,n1,n2]
+0 pick-up|instance_3[drone1,pod1,pods_room,n0,n1]
+0 pick-up|instance_4[drone1,pod1,pods_room,n0,n1]
+0 __method_precondition_m_already_there[drone1,pods_room]
+0 __method_precondition_m_drive_to_via_split[drone1,cryo,tunnel]
+0 move-freely[drone1,cryo,tunnel]
+0 __method_precondition_m_move_freely_exec[drone1]
+0 move-carrying[drone1,cryo,tunnel]
+0 __method_precondition_m_move_carrying_exec[drone1]
+0 __method_precondition_m_drive_to_via_split[drone1,hall_a,tunnel]
+0 move-freely[drone1,hall_a,tunnel]
+0 move-carrying[drone1,hall_a,tunnel]
+0 __method_precondition_m_drive_to_via_split[drone1,hall_b,tunnel]
+0 move-freely[drone1,hall_b,tunnel]
+0 move-carrying[drone1,hall_b,tunnel]
+0 __method_precondition_m_drive_to_via_split[drone1,tunnel,pods_room]
+0 move-freely[drone1,tunnel,pods_room]
+0 move-carrying[drone1,tunnel,pods_room]
+0 move-freely[drone1,tunnel,stasis]
+0 move-carrying[drone1,tunnel,stasis]
+0 move-freely[drone1,tunnel,cryo]
+0 move-carrying[drone1,tunnel,cryo]
+0 move-freely[drone1,tunnel,hall_b]
+0 move-carrying[drone1,tunnel,hall_b]
+0 move-freely[drone1,tunnel,hall_a]
+0 move-carrying[drone1,tunnel,hall_a]
+0 move-freely[drone1,tunnel,entrance]
+0 move-carrying[drone1,tunnel,entrance]
+0 __method_precondition_m_drive_to_via_split[drone1,stasis,tunnel]
+0 move-freely[drone1,stasis,tunnel]
+0 move-carrying[drone1,stasis,tunnel]
+0 move-freely[drone1,pods_room,tunnel]
+0 move-carrying[drone1,pods_room,tunnel]
+0 __method_precondition_m_drive_to_via_split[drone1,entrance,tunnel]
+0 move-freely[drone1,entrance,tunnel]
+0 move-carrying[drone1,entrance,tunnel]
+0 drop|instance_2[drone1,mars_core,stasis,n1,n0]
+0 pick-up|instance_3[drone1,mars_core,cryo,n0,n1]
+0 pick-up|instance_4[drone1,mars_core,cryo,n0,n1]
+0 drop|instance_2[curator,art_alpha,cryo,n1,n0]
+0 pick-up|instance_3[curator,art_alpha,hall_a,n0,n1]
+0 __method_precondition_m_already_there[curator,cryo]
+0 move-freely[curator,cryo,tunnel]
+0 __method_precondition_m_move_freely_exec[curator]
+0 move-carrying[curator,cryo,tunnel]
+0 __method_precondition_m_move_carrying_exec[curator]
+0 __method_precondition_m_drive_to_via_split[curator,hall_b,tunnel]
+0 move-freely[curator,hall_b,tunnel]
+0 move-carrying[curator,hall_b,tunnel]
+0 __method_precondition_m_drive_to_via_split[curator,stasis,tunnel]
+0 move-freely[curator,stasis,tunnel]
+0 move-carrying[curator,stasis,tunnel]
+0 __method_precondition_m_drive_to_via_split[curator,hall_a,tunnel]
+0 move-freely[curator,hall_a,tunnel]
+0 move-carrying[curator,hall_a,tunnel]
+0 __method_precondition_m_drive_to_via_split[curator,pods_room,tunnel]
+0 move-freely[curator,pods_room,tunnel]
+0 move-carrying[curator,pods_room,tunnel]
+0 __method_precondition_m_drive_to_via_split[curator,tunnel,pods_room]
+0 move-freely[curator,tunnel,pods_room]
+0 move-carrying[curator,tunnel,pods_room]
+0 __method_precondition_m_drive_to_via_split[curator,entrance,tunnel]
+0 move-freely[curator,entrance,tunnel]
+0 move-carrying[curator,entrance,tunnel]
+0 move-freely[curator,tunnel,stasis]
+0 move-carrying[curator,tunnel,stasis]
+0 move-freely[curator,tunnel,cryo]
+0 move-carrying[curator,tunnel,cryo]
+0 move-freely[curator,tunnel,hall_b]
+0 move-carrying[curator,tunnel,hall_b]
+0 move-freely[curator,tunnel,hall_a]
+0 move-carrying[curator,tunnel,hall_a]
+0 move-freely[curator,tunnel,entrance]
+0 move-carrying[curator,tunnel,entrance]
+0 cool-down[curator,art_alpha]
+1 __top[]
+1 pick-up[drone1,pod1,stasis,n0,n1]
+1 pick-up[drone1,pod1,hall_b,n0,n1]
+1 pick-up[drone1,pod1,pods_room,n0,n1]
+1 get_to[drone1,pods_room]
+1 m_drive_to_via_splitted_1[drone1]
+1 do_move_step[drone1,cryo,tunnel]
+1 do_move_step[drone1,hall_a,tunnel]
+1 do_move_step[drone1,hall_b,tunnel]
+1 do_move_step[drone1,tunnel,pods_room]
+1 do_move_step[drone1,tunnel,stasis]
+1 do_move_step[drone1,tunnel,cryo]
+1 do_move_step[drone1,tunnel,hall_b]
+1 do_move_step[drone1,tunnel,hall_a]
+1 do_move_step[drone1,tunnel,entrance]
+1 do_move_step[drone1,stasis,tunnel]
+1 do_move_step[drone1,pods_room,tunnel]
+1 do_move_step[drone1,entrance,tunnel]
+1 get_to[drone1,stasis]
+1 get_to[drone1,hall_b]
+1 pick-up[drone1,mars_core,cryo,n0,n1]
+1 get_to[drone1,cryo]
+1 get_to[curator,cryo]
+1 m_drive_to_via_splitted_1[curator]
+1 do_move_step[curator,cryo,tunnel]
+1 do_move_step[curator,hall_b,tunnel]
+1 do_move_step[curator,stasis,tunnel]
+1 do_move_step[curator,hall_a,tunnel]
+1 do_move_step[curator,pods_room,tunnel]
+1 do_move_step[curator,tunnel,pods_room]
+1 do_move_step[curator,entrance,tunnel]
+1 do_move_step[curator,tunnel,stasis]
+1 do_move_step[curator,tunnel,cryo]
+1 do_move_step[curator,tunnel,hall_b]
+1 do_move_step[curator,tunnel,hall_a]
+1 do_move_step[curator,tunnel,entrance]
+1 get_to[curator,hall_a]
+
+;; initial abstract task
+85
+
+;; methods
+93
+<<<<<<<<<<<<__top_method;deliver_fragile[drone1,art_beta,pod1,hall_b,pods_room,stasis,pods_room,n0,n1,n2];m_deliver_frag;1;0,-1,-2,-3,-4,-5,-6,-7,-8,-9,-10,-11,-12,-13,-14,2>;unload-pod[drone1,art_beta,pod1,stasis,n0,n1];_method_for_multiple_expansions_of_unload-pod|instance_1;10;0,1,2,3,4,5,6,7,8,9,-1,11,12,13,14,15>;drop[drone1,pod1,pods_room,n1,n0];_method_for_multiple_expansions_of_drop|instance_2;14;0,1,2,3,4,5,6,7,8,9,10,11,12,13,-1,15>;drop[drone1,art_beta,stasis,n1,n0];_method_for_multiple_expansions_of_drop|instance_1;11;0,1,2,3,4,5,6,7,8,9,10,-1,12,13,14,15>;drop[drone1,pod1,stasis,n1,n0];_method_for_multiple_expansions_of_drop|instance_2;9;0,1,2,3,4,5,6,7,8,-1,10,11,12,13,14,15>;drop[drone1,pod1,hall_b,n2,n1];_method_for_multiple_expansions_of_drop|instance_2;5;0,1,2,3,4,-1,6,7,8,9,10,11,12,13,14,15>;pick-up[drone1,art_beta,hall_b,n1,n2];_method_for_multiple_expansions_of_pick-up|instance_2;4;0,1,2,3,-1,5,6,7,8,9,10,11,12,13,14,15>;deliver_standard[drone1,mars_core,cryo,stasis,n0,n1];m_deliver_std;15;0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,-1,-2,-3,-4>;drop[drone1,mars_core,stasis,n1,n0];_method_for_multiple_expansions_of_drop|instance_2;18;0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,-1>;deliver_standard[curator,art_alpha,hall_a,cryo,n0,n1];m_deliver_std_cooled;0;-1,-2,-3,-4,-5,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18>;drop[curator,art_alpha,cryo,n1,n0];_method_for_multiple_expansions_of_drop|instance_2;4;0,1,2,3,-1,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22>;pick-up[curator,art_alpha,hall_a,n0,n1];_method_for_multiple_expansions_of_pick-up|instance_3;1;0,-1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22>
+85
+121 50 84 107 49 89 88 104 10 9 1 87 103 6 0 5 86 89 2 106 105 103 46 -1
+14 22 14 15 14 20 14 21 14 19 10 22 10 11 10 20 10 21 10 19 18 22 18 20 18 21 18 19 16 22 16 17 16 20 16 21 16 19 15 22 15 16 15 20 15 21 15 19 13 14 13 22 13 20 13 21 13 19 11 22 11 12 11 20 11 21 11 19 9 22 9 10 9 20 9 21 9 19 8 22 8 9 8 20 8 21 8 19 6 22 6 7 6 20 6 21 6 19 17 22 17 18 17 20 17 21 17 19 12 22 12 13 12 20 12 21 12 19 7 22 7 8 7 20 7 21 7 19 5 22 5 6 5 20 5 21 5 19 20 21 21 22 19 20 1 2 3 4 2 3 0 1 -1
+_method_for_multiple_expansions_of_pick-up|instance_3
+86
+3 -1
+-1
+_method_for_multiple_expansions_of_pick-up|instance_4
+86
+4 -1
+-1
+_method_for_multiple_expansions_of_pick-up|instance_3
+87
+7 -1
+-1
+_method_for_multiple_expansions_of_pick-up|instance_4
+87
+8 -1
+-1
+_method_for_multiple_expansions_of_pick-up|instance_3
+88
+11 -1
+-1
+_method_for_multiple_expansions_of_pick-up|instance_4
+88
+12 -1
+-1
+m_already_there
+89
+13 -1
+-1
+m_drive_to_via
+89
+90 89 -1
+0 1 -1
+_splitting_method_m_drive_to_via_splitted_1
+90
+14 91 -1
+0 1 -1
+m_move_freely_exec
+91
+16 15 -1
+0 1 -1
+m_move_carrying_exec
+91
+18 17 -1
+0 1 -1
+_splitting_method_m_drive_to_via_splitted_1
+90
+19 92 -1
+0 1 -1
+m_move_freely_exec
+92
+16 20 -1
+0 1 -1
+m_move_carrying_exec
+92
+18 21 -1
+0 1 -1
+_splitting_method_m_drive_to_via_splitted_1
+90
+22 93 -1
+0 1 -1
+m_move_freely_exec
+93
+16 23 -1
+0 1 -1
+m_move_carrying_exec
+93
+18 24 -1
+0 1 -1
+_splitting_method_m_drive_to_via_splitted_1
+90
+25 94 -1
+0 1 -1
+m_move_freely_exec
+94
+16 26 -1
+0 1 -1
+m_move_carrying_exec
+94
+18 27 -1
+0 1 -1
+_splitting_method_m_drive_to_via_splitted_1
+90
+25 95 -1
+0 1 -1
+m_move_freely_exec
+95
+16 28 -1
+0 1 -1
+m_move_carrying_exec
+95
+18 29 -1
+0 1 -1
+_splitting_method_m_drive_to_via_splitted_1
+90
+25 96 -1
+0 1 -1
+m_move_freely_exec
+96
+16 30 -1
+0 1 -1
+m_move_carrying_exec
+96
+18 31 -1
+0 1 -1
+_splitting_method_m_drive_to_via_splitted_1
+90
+25 97 -1
+0 1 -1
+m_move_freely_exec
+97
+16 32 -1
+0 1 -1
+m_move_carrying_exec
+97
+18 33 -1
+0 1 -1
+_splitting_method_m_drive_to_via_splitted_1
+90
+25 98 -1
+0 1 -1
+m_move_freely_exec
+98
+16 34 -1
+0 1 -1
+m_move_carrying_exec
+98
+18 35 -1
+0 1 -1
+_splitting_method_m_drive_to_via_splitted_1
+90
+25 99 -1
+0 1 -1
+m_move_freely_exec
+99
+16 36 -1
+0 1 -1
+m_move_carrying_exec
+99
+18 37 -1
+0 1 -1
+_splitting_method_m_drive_to_via_splitted_1
+90
+38 100 -1
+0 1 -1
+m_move_freely_exec
+100
+16 39 -1
+0 1 -1
+m_move_carrying_exec
+100
+18 40 -1
+0 1 -1
+_splitting_method_m_drive_to_via_splitted_1
+90
+13 101 -1
+0 1 -1
+m_move_freely_exec
+101
+16 41 -1
+0 1 -1
+m_move_carrying_exec
+101
+18 42 -1
+0 1 -1
+_splitting_method_m_drive_to_via_splitted_1
+90
+43 102 -1
+0 1 -1
+m_move_freely_exec
+102
+16 44 -1
+0 1 -1
+m_move_carrying_exec
+102
+18 45 -1
+0 1 -1
+m_already_there
+103
+38 -1
+-1
+m_drive_to_via
+103
+90 103 -1
+0 1 -1
+m_already_there
+104
+22 -1
+-1
+m_drive_to_via
+104
+90 104 -1
+0 1 -1
+_method_for_multiple_expansions_of_pick-up|instance_3
+105
+47 -1
+-1
+_method_for_multiple_expansions_of_pick-up|instance_4
+105
+48 -1
+-1
+m_already_there
+106
+14 -1
+-1
+m_drive_to_via
+106
+90 106 -1
+0 1 -1
+m_already_there
+107
+51 -1
+-1
+m_drive_to_via
+107
+108 107 -1
+0 1 -1
+_splitting_method_m_drive_to_via_splitted_1
+108
+51 109 -1
+0 1 -1
+m_move_freely_exec
+109
+53 52 -1
+0 1 -1
+m_move_carrying_exec
+109
+55 54 -1
+0 1 -1
+_splitting_method_m_drive_to_via_splitted_1
+108
+56 110 -1
+0 1 -1
+m_move_freely_exec
+110
+53 57 -1
+0 1 -1
+m_move_carrying_exec
+110
+55 58 -1
+0 1 -1
+_splitting_method_m_drive_to_via_splitted_1
+108
+59 111 -1
+0 1 -1
+m_move_freely_exec
+111
+53 60 -1
+0 1 -1
+m_move_carrying_exec
+111
+55 61 -1
+0 1 -1
+_splitting_method_m_drive_to_via_splitted_1
+108
+62 112 -1
+0 1 -1
+m_move_freely_exec
+112
+53 63 -1
+0 1 -1
+m_move_carrying_exec
+112
+55 64 -1
+0 1 -1
+_splitting_method_m_drive_to_via_splitted_1
+108
+65 113 -1
+0 1 -1
+m_move_freely_exec
+113
+53 66 -1
+0 1 -1
+m_move_carrying_exec
+113
+55 67 -1
+0 1 -1
+_splitting_method_m_drive_to_via_splitted_1
+108
+68 114 -1
+0 1 -1
+m_move_freely_exec
+114
+53 69 -1
+0 1 -1
+m_move_carrying_exec
+114
+55 70 -1
+0 1 -1
+_splitting_method_m_drive_to_via_splitted_1
+108
+71 115 -1
+0 1 -1
+m_move_freely_exec
+115
+53 72 -1
+0 1 -1
+m_move_carrying_exec
+115
+55 73 -1
+0 1 -1
+_splitting_method_m_drive_to_via_splitted_1
+108
+68 116 -1
+0 1 -1
+m_move_freely_exec
+116
+53 74 -1
+0 1 -1
+m_move_carrying_exec
+116
+55 75 -1
+0 1 -1
+_splitting_method_m_drive_to_via_splitted_1
+108
+68 117 -1
+0 1 -1
+m_move_freely_exec
+117
+53 76 -1
+0 1 -1
+m_move_carrying_exec
+117
+55 77 -1
+0 1 -1
+_splitting_method_m_drive_to_via_splitted_1
+108
+68 118 -1
+0 1 -1
+m_move_freely_exec
+118
+53 78 -1
+0 1 -1
+m_move_carrying_exec
+118
+55 79 -1
+0 1 -1
+_splitting_method_m_drive_to_via_splitted_1
+108
+68 119 -1
+0 1 -1
+m_move_freely_exec
+119
+53 80 -1
+0 1 -1
+m_move_carrying_exec
+119
+55 81 -1
+0 1 -1
+_splitting_method_m_drive_to_via_splitted_1
+108
+68 120 -1
+0 1 -1
+m_move_freely_exec
+120
+53 82 -1
+0 1 -1
+m_move_carrying_exec
+120
+55 83 -1
+0 1 -1
+m_already_there
+121
+62 -1
+-1
+m_drive_to_via
+121
+108 121 -1
+0 1 -1

@@ -1,0 +1,229 @@
+(define (domain imv-htn)
+  (:requirements :strips :typing :negation :conditional-effects :existential-preconditions :hierarchical)
+
+  (:types
+    location item agent count - object
+    robot drone - agent
+    artifact pod - item
+  )
+
+  (:predicates
+    (at ?o - object ?l - location)
+    (connected ?l1 ?l2 - location)
+    
+    ;; Gestione Inventario
+    (holding ?a - agent ?i - item)
+    (load ?a - agent ?c - count)         
+    (next ?c1 ?c2 - count)               
+    (capacity-ok ?a - agent ?c - count)  
+    
+    ;; Proprietà Oggetti
+    (inside ?art - item ?p - item)
+    (empty ?p - item)
+    (transportable ?i - item)      
+    
+    ;; Ambiente
+    (seismic-active ?l - location) 
+    (blocked ?a - agent) 
+
+    ;; --- NUOVI PREDICATI PER RAFFREDDAMENTO ---
+    (needs-cooling ?i - item)
+    (cooled ?i - item)
+  )
+
+  ;; --- AZIONI PRIMITIVE ---
+  
+  (:action move-freely
+    :parameters (?a - agent ?from ?to - location)
+    :precondition (and 
+        (at ?a ?from) (connected ?from ?to) (load ?a n0))
+    :effect (and (not (at ?a ?from)) (at ?a ?to))
+  )
+
+  (:action move-carrying
+    :parameters (?a - agent ?from ?to - location)
+    :precondition (and 
+        (at ?a ?from) (connected ?from ?to)
+        (not (load ?a n0)) (not (blocked ?a)))
+    :effect (and (not (at ?a ?from)) (at ?a ?to))
+  )
+
+  (:action pick-up
+    :parameters (?a - agent ?i - item ?l - location ?c_pre ?c_post - count)
+    :precondition (and 
+        (at ?a ?l) (at ?i ?l)
+        (load ?a ?c_pre) (next ?c_pre ?c_post) (capacity-ok ?a ?c_post)
+        (not (seismic-active ?l)) 
+        (or (transportable ?i)
+            (exists (?p - pod) (and (holding ?a ?p) (empty ?p))))
+    )
+    :effect (and 
+        (not (at ?i ?l)) (holding ?a ?i)
+        (not (load ?a ?c_pre)) (load ?a ?c_post)
+        (when (not (transportable ?i)) (blocked ?a))
+    )
+  )
+
+  (:action drop
+    :parameters (?a - agent ?i - item ?l - location ?c_pre ?c_post - count)
+    :precondition (and 
+        (at ?a ?l) (holding ?a ?i)
+        (load ?a ?c_pre) (next ?c_post ?c_pre)
+    )
+    :effect (and 
+        (at ?i ?l) (not (holding ?a ?i))
+        (not (load ?a ?c_pre)) (load ?a ?c_post)
+        (when (not (transportable ?i)) (not (blocked ?a)))
+    )
+  )
+
+  (:action load-pod
+    :parameters (?a - agent ?art - item ?pod - item ?l - location ?c_pre ?c_post - count)
+    :precondition (and 
+        (at ?a ?l) (at ?pod ?l) (holding ?a ?art) (empty ?pod)
+        (load ?a ?c_pre) (next ?c_post ?c_pre) 
+        (not (seismic-active ?l))
+    )
+    :effect (and 
+        (not (holding ?a ?art)) (not (empty ?pod)) (inside ?art ?pod)
+        (not (load ?a ?c_pre)) (load ?a ?c_post)
+        (not (blocked ?a))
+    )
+  )
+
+  (:action unload-pod
+    :parameters (?a - agent ?art - item ?pod - item ?l - location ?c_pre ?c_post - count)
+    :precondition (and 
+        (at ?a ?l) (at ?pod ?l) (inside ?art ?pod)
+        (load ?a ?c_pre) (next ?c_pre ?c_post) (capacity-ok ?a ?c_post) 
+        (not (seismic-active ?l))
+    )
+    :effect (and 
+        (holding ?a ?art) (empty ?pod) (not (inside ?art ?pod))
+        (not (load ?a ?c_pre)) (load ?a ?c_post)
+        (when (not (transportable ?art)) (blocked ?a))
+    )
+  )
+
+  ;; --- NUOVA AZIONE DI RAFFREDDAMENTO ---
+  (:action cool-down
+    :parameters (?a - agent ?i - item)
+    :precondition (and 
+        (holding ?a ?i)       ;; Devi averlo in mano
+        (needs-cooling ?i)    ;; Deve richiedere raffreddamento
+        (not (cooled ?i))     ;; Non lo raffreddiamo due volte
+    )
+    :effect (cooled ?i)
+  )
+
+  ;; --- TASKS ---
+
+  (:task get_to
+    :parameters (?a - agent ?to - location)
+  )
+
+  (:task do_move_step
+    :parameters (?a - agent ?from ?to - location)
+  )
+
+  (:task deliver_standard
+    :parameters (?a - agent ?item - item ?from - location ?to - location ?c0 ?c1 - count)
+  )
+
+  (:task deliver_fragile
+    :parameters (?a - agent ?art - item ?pod - pod ?art_loc - location ?pod_loc - location ?dest - location ?pod_home - location ?c0 ?c1 ?c2 - count)
+  )
+
+  ;; --- METHODS ---
+
+  ;; 1. NAVIGAZIONE RICORSIVA
+  (:method m_already_there
+    :parameters (?a - agent ?l - location)
+    :task (get_to ?a ?l)
+    :precondition (at ?a ?l)
+    :subtasks ()
+  )
+
+  (:method m_drive_to_via
+    :parameters (?a - agent ?from - location ?to - location ?next - location)
+    :task (get_to ?a ?to)
+    :precondition (and (at ?a ?from) (connected ?from ?next))
+    :subtasks (and
+      (step1 (do_move_step ?a ?from ?next))
+      (step2 (get_to ?a ?to))
+    )
+    :ordering (step1 < step2)
+  )
+
+  (:method m_move_freely_exec
+    :parameters (?a - agent ?from ?to - location)
+    :task (do_move_step ?a ?from ?to)
+    :precondition (load ?a n0)
+    :subtasks (move-freely ?a ?from ?to)
+  )
+
+  (:method m_move_carrying_exec
+    :parameters (?a - agent ?from ?to - location)
+    :task (do_move_step ?a ?from ?to)
+    :precondition (not (load ?a n0))
+    :subtasks (move-carrying ?a ?from ?to)
+  )
+
+  ;; 2. CONSEGNA STANDARD
+  ;; Caso A: Oggetto NORMALE (NON richiede raffreddamento)
+  (:method m_deliver_std
+    :parameters (?a - agent ?item - item ?from - location ?to - location ?c0 ?c1 - count)
+    :task (deliver_standard ?a ?item ?from ?to ?c0 ?c1)
+    :precondition (not (needs-cooling ?item))  ;; <--- VINCOLO
+    :subtasks (and
+      (t1 (get_to ?a ?from))
+      (t2 (pick-up ?a ?item ?from ?c0 ?c1))
+      (t3 (get_to ?a ?to))
+      (t4 (drop ?a ?item ?to ?c1 ?c0))
+    )
+    :ordering (and (t1 < t2) (t2 < t3) (t3 < t4))
+  )
+
+  ;; Caso B: Oggetto SENSIBILE (RICHIEDE raffreddamento)
+  ;; Sequenza forzata: Pick -> COOL -> Move -> Drop
+  (:method m_deliver_std_cooled
+    :parameters (?a - agent ?item - item ?from - location ?to - location ?c0 ?c1 - count)
+    :task (deliver_standard ?a ?item ?from ?to ?c0 ?c1)
+    :precondition (needs-cooling ?item)         ;; <--- VINCOLO
+    :subtasks (and
+      (t1 (get_to ?a ?from))
+      (t2 (pick-up ?a ?item ?from ?c0 ?c1))
+      (t3 (cool-down ?a ?item))                 ;; <--- AZIONE AGGIUNTA
+      (t4 (get_to ?a ?to))
+      (t5 (drop ?a ?item ?to ?c1 ?c0))
+    )
+    :ordering (and (t1 < t2) (t2 < t3) (t3 < t4) (t4 < t5))
+  )
+
+  ;; 3. CONSEGNA FRAGILE
+  (:method m_deliver_frag
+    :parameters (?a - agent ?art - item ?pod - pod ?art_loc - location ?pod_loc - location ?dest - location ?pod_home - location ?c0 ?c1 ?c2 - count)
+    :task (deliver_fragile ?a ?art ?pod ?art_loc ?pod_loc ?dest ?pod_home ?c0 ?c1 ?c2)
+    :subtasks (and
+      (t1 (get_to ?a ?pod_loc))
+      (t2 (pick-up ?a ?pod ?pod_loc ?c0 ?c1))
+      (t3 (get_to ?a ?art_loc))
+      (t4 (pick-up ?a ?art ?art_loc ?c1 ?c2))
+      (t5 (drop ?a ?pod ?art_loc ?c2 ?c1))
+      (t6 (load-pod ?a ?art ?pod ?art_loc ?c1 ?c0))
+      (t7 (pick-up ?a ?pod ?art_loc ?c0 ?c1))
+      (t8 (get_to ?a ?dest))
+      (t9 (drop ?a ?pod ?dest ?c1 ?c0))
+      (t10 (unload-pod ?a ?art ?pod ?dest ?c0 ?c1))
+      (t11 (drop ?a ?art ?dest ?c1 ?c0))
+      (t12 (pick-up ?a ?pod ?dest ?c0 ?c1))
+      (t13 (get_to ?a ?pod_home))
+      (t14 (drop ?a ?pod ?pod_home ?c1 ?c0))
+    )
+    :ordering (and 
+       (t1 < t2) (t2 < t3) (t3 < t4) (t4 < t5) (t5 < t6) 
+       (t6 < t7) (t7 < t8) (t8 < t9) (t9 < t10) (t10 < t11) 
+       (t11 < t12) (t12 < t13) (t13 < t14)
+    )
+  )
+)

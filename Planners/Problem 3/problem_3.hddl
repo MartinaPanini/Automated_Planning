@@ -1,0 +1,66 @@
+(define (problem imv-problem-3-htn)
+  (:domain imv-htn)
+
+  (:objects
+    curator - robot
+    drone1 - drone
+    entrance tunnel hall_a hall_b cryo stasis pods_room - location
+    art_alpha art_beta mars_core - artifact
+    pod1 pod2 - pod
+    n0 n1 n2 - count
+  )
+
+  (:init
+    ;; Topologia
+    (connected entrance tunnel) (connected tunnel entrance)
+    (connected tunnel hall_a)   (connected hall_a tunnel)
+    (connected tunnel hall_b)   (connected hall_b tunnel)
+    (connected tunnel cryo)     (connected cryo tunnel)
+    (connected tunnel stasis)   (connected stasis tunnel)
+    (connected tunnel pods_room)(connected pods_room tunnel)
+
+    ;; Stato Agenti
+    (at curator entrance) (load curator n0)
+    (at drone1 entrance)  (load drone1 n0)
+
+    ;; Capacità
+    (capacity-ok drone1 n0) (capacity-ok drone1 n1) (capacity-ok drone1 n2)
+    (capacity-ok curator n0) (capacity-ok curator n1) (capacity-ok curator n2)
+    
+    ;; Numeri
+    (next n0 n1) (next n1 n2)
+
+    ;; Oggetti
+    (at art_alpha hall_a)
+    (at art_beta hall_b)
+    (at mars_core cryo)
+    (at pod1 pods_room) (empty pod1)
+    (at pod2 pods_room) (empty pod2)
+
+    ;; Regole di trasporto
+    (transportable pod1)
+    (transportable pod2)
+    (transportable art_alpha)
+    (transportable mars_core)
+    ;; art_beta NON è trasportabile (innesca logica fragile)
+
+    ;; --- NUOVO: REQUISITI DI RAFFREDDAMENTO ---
+    (needs-cooling art_alpha) 
+    ;; Nota: non aggiungiamo (needs-cooling mars_core), quindi userà il metodo standard veloce.
+  )
+
+  (:htn
+    :parameters ()
+    :subtasks (and
+      ;; TASK 1: Artefatto Fragile (Beta) -> Stasis (usando Pod1)
+      (task_fragile (deliver_fragile drone1 art_beta pod1 hall_b pods_room stasis pods_room n0 n1 n2))
+      
+      ;; TASK 2: Artefatto Alpha -> Cryo (Questo innescherà il raffreddamento)
+      (task_std_1 (deliver_standard curator art_alpha hall_a cryo n0 n1))
+      
+      ;; TASK 3: Mars Core -> Stasis (Questo userà il trasporto normale)
+      (task_std_2 (deliver_standard drone1 mars_core cryo stasis n0 n1))
+    )
+    :ordering (and (task_fragile < task_std_2)) 
+  )
+)
