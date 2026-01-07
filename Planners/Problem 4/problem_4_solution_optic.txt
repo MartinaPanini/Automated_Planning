@@ -1,0 +1,44 @@
+root@docker-desktop:~/Planners/Problem 4# planutils run optic domain_4.pddl problem_4.pddl 
+Number of literals: 78
+
+; Plan found with metric 180.023
+; Theoretical reachable cost 180.024
+; States evaluated so far: 5178
+; States pruned based on pre-heuristic cost lower bound: 0
+; Time 21.48
+0.000: (move drone1 entrance tunnel)  [10.000]
+0.000: (move curator entrance tunnel)  [10.000]
+10.001: (move curator tunnel pods_room)  [10.000]
+10.001: (move drone1 tunnel hall_a)  [10.000]
+20.002: (pick_up_pod curator pod1 pods_room n0 n1)  [5.000]
+20.002: (pick_up_secure drone1 art_alpha hall_a n0 n1)  [5.000]
+25.003: (move curator pods_room tunnel)  [10.000]
+25.003: (cool_down drone1 art_alpha hall_a)  [5.000]
+30.004: (move drone1 hall_a tunnel)  [10.000]
+35.004: (drop_secure curator pod1 tunnel n1 n0)  [5.000]
+40.005: (move curator tunnel stasis)  [10.000]
+40.005: (move drone1 tunnel cryo)  [10.000]
+50.006: (move curator stasis tunnel)  [10.000]
+50.006: (pick_up_secure drone1 mars_core cryo n1 n2)  [5.000]
+55.007: (drop_secure drone1 art_alpha cryo n2 n1)  [5.000]
+60.008: (move drone1 cryo tunnel)  [10.000]
+70.009: (move drone1 tunnel stasis)  [10.000]
+80.010: (drop_secure drone1 mars_core stasis n1 n0)  [5.000]
+85.011: (move drone1 stasis tunnel)  [10.000]
+95.012: (move drone1 tunnel pods_room)  [10.000]
+105.013: (pick_up_pod drone1 pod2 pods_room n0 n1)  [5.000]
+110.014: (move drone1 pods_room tunnel)  [10.000]
+120.015: (drop_secure drone1 pod2 tunnel n1 n0)  [5.000]
+125.016: (pick_up_pod drone1 pod1 tunnel n0 n1)  [5.000]
+125.016: (pick_up_pod curator pod2 tunnel n0 n1)  [5.000]
+130.017: (move drone1 tunnel hall_b)  [10.000]
+130.017: (move curator tunnel stasis)  [10.000]
+140.018: (pick_up_fragile drone1 art_beta pod1 hall_b n1 n2)  [5.000]
+140.018: (drop_secure curator pod2 stasis n1 n0)  [5.000]
+145.019: (load_pod drone1 art_beta pod1 hall_b n2 n1)  [5.000]
+150.020: (move drone1 hall_b tunnel)  [10.000]
+160.021: (move drone1 tunnel stasis)  [10.000]
+170.022: (unload_pod_fragile drone1 art_beta pod1 stasis n1 n2)  [5.000]
+175.023: (drop_fragile drone1 art_beta stasis n2 n1)  [5.000]
+
+ * All goal deadlines now no later than 180.023
