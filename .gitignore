@@ -20,3 +20,6 @@ __pycache__/
 # Apptainer / Singularity (IL COLPEVOLE)
 .apptainer/
 *.sif
+
+
+*.zip
