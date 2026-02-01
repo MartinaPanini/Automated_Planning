@@ -19,7 +19,7 @@
     (movement-allowed ?a - obj)
     (has-cooling ?a - obj)
     (needs-cooling ?i - obj)
-    (cooled ?i - obj) ; AGGIUNTO per logica positiva
+    (cooled ?i - obj) 
   )
 
   (:durative-action move
@@ -247,7 +247,7 @@
         (at start (not (ready ?a)))
         (at end (ready ?a))
         (at end (not (needs-cooling ?i)))
-        (at end (cooled ?i)) ; AGGIUNTO: Effetto positivo
+        (at end (cooled ?i))
     )
   )
 )

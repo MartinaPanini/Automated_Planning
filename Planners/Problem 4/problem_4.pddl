@@ -63,7 +63,7 @@
 )
 
 (:goal (and
-    (cooled art_alpha) ; CORRETTO: Goal Positivo
+    (cooled art_alpha) 
     (at art_beta stasis)
     (at art_alpha cryo)
     (at mars_core stasis)

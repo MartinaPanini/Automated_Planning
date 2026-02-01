@@ -61,7 +61,7 @@
     (transportable mars_core)
     (transportable pod1)
     (transportable pod2)
-    ; NOTA CRITICA: art_beta NON è transportable (deve usare il pod)
+
     
     ; Properties
     (needs-cooling art_alpha)

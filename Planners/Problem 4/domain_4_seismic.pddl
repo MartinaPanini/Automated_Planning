@@ -35,7 +35,7 @@
         (at start (at ?r ?from))
         (over all (connected ?from ?to))
         (over all (safe ?to))
-        (over all (safe ?from)) ; Safety check su entrambi i lati consigliato
+        (over all (safe ?from)) 
     )
     :effect (and
         (at start (not (at ?r ?from)))
@@ -49,7 +49,7 @@
     :condition (and
         (over all (at ?r ?l))
         (at start (at ?i ?l))
-        (over all (transportable ?i)) ; Questo blocca Art Beta se non è transportable
+        (over all (transportable ?i)) 
         (at start (load ?r ?c_pre))
         (over all (next ?c_pre ?c_post))
         (over all (capacity-ok ?r ?c_post))
@@ -81,26 +81,25 @@
     )
   )
 
-  ; MODIFICATO: Carica da terra dentro il pod
   (:durative-action load_pod
     :parameters (?r - rover ?art - artifact ?pod - pod ?l - location)
     :duration (= ?duration 8)
     :condition (and
         (over all (at ?r ?l))
-        (over all (holding ?r ?pod))  ; Il rover deve tenere il pod
+        (over all (holding ?r ?pod))  
         (at start (empty ?pod))
-        (at start (at ?art ?l))       ; L'artefatto è A TERRA
+        (at start (at ?art ?l))      
         (over all (safe ?l))
     )
     :effect (and
-        (at start (not (at ?art ?l))) ; L'artefatto lascia terra
+        (at start (not (at ?art ?l))) 
         (at start (not (empty ?pod)))
         (at end (inside ?art ?pod))
-        ; Nota: Non cambiamo il load count del rover perché tiene sempre 1 pod
+        
     )
   )
 
-  ; MODIFICATO: Scarica dal pod a terra
+
   (:durative-action unload_pod
     :parameters (?r - rover ?art - artifact ?pod - pod ?l - location)
     :duration (= ?duration 8)
@@ -113,7 +112,7 @@
     :effect (and
         (at start (not (inside ?art ?pod)))
         (at end (empty ?pod))
-        (at end (at ?art ?l))         ; L'artefatto finisce A TERRA
+        (at end (at ?art ?l))         
     )
   )
 
