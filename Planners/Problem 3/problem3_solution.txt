@@ -1,0 +1,135 @@
+==>
+336 __method_precondition_m_drive_to_via_split[drone1,entrance,tunnel]
+338 __method_precondition_m_move_freely_exec[drone1]
+1350 __method_precondition_m_drive_to_via_split[curator,entrance,tunnel]
+1368 __method_precondition_m_move_freely_exec[curator]
+1371 move-freely[drone1,entrance,tunnel]
+2689 __method_precondition_m_drive_to_via_split[drone1,tunnel,pods_room]
+2729 __method_precondition_m_move_freely_exec[drone1]
+2733 move-freely[drone1,tunnel,pods_room]
+2740 __method_precondition_m_already_there[drone1,pods_room]
+2746 pick-up|instance_3[drone1,pod1,pods_room,n0,n1]
+3061 __method_precondition_m_already_there[drone1,pods_room]
+3069 __method_precondition_m_move_carrying_exec[drone1]
+3070 move-freely[curator,entrance,tunnel]
+3111 __method_precondition_m_drive_to_via_split[curator,tunnel,pods_room]
+3150 __method_precondition_m_move_freely_exec[curator]
+3154 move-freely[curator,tunnel,hall_a]
+3324 __method_precondition_m_drive_to_via_split[curator,hall_a,tunnel]
+3327 pick-up|instance_3[curator,art_alpha,hall_a,n0,n1]
+3329 cool-down[curator,art_alpha]
+3347 __method_precondition_m_drive_to_via_split[curator,hall_a,tunnel]
+3367 __method_precondition_m_move_carrying_exec[curator]
+3369 move-carrying[curator,hall_a,tunnel]
+3399 __method_precondition_m_drive_to_via_split[curator,tunnel,pods_room]
+3409 __method_precondition_m_move_carrying_exec[curator]
+3411 move-carrying[curator,tunnel,cryo]
+3413 __method_precondition_m_already_there[curator,cryo]
+3416 drop|instance_2[curator,art_alpha,cryo,n1,n0]
+3417 move-carrying[drone1,pods_room,tunnel]
+3436 __method_precondition_m_drive_to_via_split[drone1,tunnel,pods_room]
+3469 __method_precondition_m_move_carrying_exec[drone1]
+3470 move-carrying[drone1,tunnel,hall_b]
+3472 __method_precondition_m_drive_to_via_split[drone1,hall_b,tunnel]
+3473 pick-up|instance_2[drone1,art_beta,hall_b,n1,n2]
+3474 drop|instance_2[drone1,pod1,hall_b,n2,n1]
+3475 load-pod[drone1,art_beta,pod1,hall_b,n1,n0]
+3478 pick-up|instance_3[drone1,pod1,hall_b,n0,n1]
+3485 __method_precondition_m_drive_to_via_split[drone1,hall_b,tunnel]
+3497 __method_precondition_m_move_carrying_exec[drone1]
+3498 move-carrying[drone1,hall_b,tunnel]
+3507 __method_precondition_m_drive_to_via_split[drone1,tunnel,pods_room]
+3533 __method_precondition_m_move_carrying_exec[drone1]
+3534 move-carrying[drone1,tunnel,stasis]
+3536 __method_precondition_m_drive_to_via_split[drone1,stasis,tunnel]
+3537 drop|instance_2[drone1,pod1,stasis,n1,n0]
+3538 unload-pod|instance_1[drone1,art_beta,pod1,stasis,n0,n1]
+3539 drop|instance_1[drone1,art_beta,stasis,n1,n0]
+3542 pick-up|instance_3[drone1,pod1,stasis,n0,n1]
+3556 __method_precondition_m_drive_to_via_split[drone1,stasis,tunnel]
+3561 __method_precondition_m_move_carrying_exec[drone1]
+3562 move-carrying[drone1,stasis,tunnel]
+3569 __method_precondition_m_drive_to_via_split[drone1,tunnel,pods_room]
+3585 __method_precondition_m_move_carrying_exec[drone1]
+3586 move-carrying[drone1,tunnel,pods_room]
+3588 __method_precondition_m_already_there[drone1,pods_room]
+3589 drop|instance_2[drone1,pod1,pods_room,n1,n0]
+3604 __method_precondition_m_already_there[drone1,pods_room]
+3607 __method_precondition_m_move_freely_exec[drone1]
+3608 move-freely[drone1,pods_room,tunnel]
+3620 __method_precondition_m_drive_to_via_split[drone1,tunnel,pods_room]
+3637 __method_precondition_m_move_freely_exec[drone1]
+3638 move-freely[drone1,tunnel,cryo]
+3641 __method_precondition_m_drive_to_via_split[drone1,cryo,tunnel]
+3644 pick-up|instance_3[drone1,mars_core,cryo,n0,n1]
+3649 __method_precondition_m_drive_to_via_split[drone1,cryo,tunnel]
+3663 __method_precondition_m_move_carrying_exec[drone1]
+3664 move-carrying[drone1,cryo,tunnel]
+3673 __method_precondition_m_drive_to_via_split[drone1,tunnel,pods_room]
+3687 __method_precondition_m_move_carrying_exec[drone1]
+3688 move-carrying[drone1,tunnel,stasis]
+3690 __method_precondition_m_drive_to_via_split[drone1,stasis,tunnel]
+3691 drop|instance_2[drone1,mars_core,stasis,n1,n0]
+root 0
+3689 get_to[drone1,stasis] -> m_already_there 3690
+3686 do_move_step[drone1,tunnel,stasis] -> m_move_carrying_exec 3687 3688
+3672 m_drive_to_via_splitted_1[drone1] -> _splitting_method_m_drive_to_via_splitted_1 3673 3686
+3666 get_to[drone1,stasis] -> m_drive_to_via 3672 3689
+3662 do_move_step[drone1,cryo,tunnel] -> m_move_carrying_exec 3663 3664
+3648 m_drive_to_via_splitted_1[drone1] -> _splitting_method_m_drive_to_via_splitted_1 3649 3662
+3647 get_to[drone1,stasis] -> m_drive_to_via 3648 3666
+3643 pick-up[drone1,mars_core,cryo,n0,n1] -> _method_for_multiple_expansions_of_pick-up|instance_3 3644
+3640 get_to[drone1,cryo] -> m_already_there 3641
+3636 do_move_step[drone1,tunnel,cryo] -> m_move_freely_exec 3637 3638
+3619 m_drive_to_via_splitted_1[drone1] -> _splitting_method_m_drive_to_via_splitted_1 3620 3636
+3611 get_to[drone1,cryo] -> m_drive_to_via 3619 3640
+3606 do_move_step[drone1,pods_room,tunnel] -> m_move_freely_exec 3607 3608
+3603 m_drive_to_via_splitted_1[drone1] -> _splitting_method_m_drive_to_via_splitted_1 3604 3606
+3592 get_to[drone1,cryo] -> m_drive_to_via 3603 3611
+3587 get_to[drone1,pods_room] -> m_already_there 3588
+3584 do_move_step[drone1,tunnel,pods_room] -> m_move_carrying_exec 3585 3586
+3568 m_drive_to_via_splitted_1[drone1] -> _splitting_method_m_drive_to_via_splitted_1 3569 3584
+3564 get_to[drone1,pods_room] -> m_drive_to_via 3568 3587
+3560 do_move_step[drone1,stasis,tunnel] -> m_move_carrying_exec 3561 3562
+3555 m_drive_to_via_splitted_1[drone1] -> _splitting_method_m_drive_to_via_splitted_1 3556 3560
+3545 get_to[drone1,pods_room] -> m_drive_to_via 3555 3564
+3541 pick-up[drone1,pod1,stasis,n0,n1] -> _method_for_multiple_expansions_of_pick-up|instance_3 3542
+3535 get_to[drone1,stasis] -> m_already_there 3536
+3532 do_move_step[drone1,tunnel,stasis] -> m_move_carrying_exec 3533 3534
+3506 m_drive_to_via_splitted_1[drone1] -> _splitting_method_m_drive_to_via_splitted_1 3507 3532
+3500 get_to[drone1,stasis] -> m_drive_to_via 3506 3535
+3496 do_move_step[drone1,hall_b,tunnel] -> m_move_carrying_exec 3497 3498
+3484 m_drive_to_via_splitted_1[drone1] -> _splitting_method_m_drive_to_via_splitted_1 3485 3496
+3481 get_to[drone1,stasis] -> m_drive_to_via 3484 3500
+3477 pick-up[drone1,pod1,hall_b,n0,n1] -> _method_for_multiple_expansions_of_pick-up|instance_3 3478
+3471 get_to[drone1,hall_b] -> m_already_there 3472
+3468 do_move_step[drone1,tunnel,hall_b] -> m_move_carrying_exec 3469 3470
+3435 m_drive_to_via_splitted_1[drone1] -> _splitting_method_m_drive_to_via_splitted_1 3436 3468
+3419 get_to[drone1,hall_b] -> m_drive_to_via 3435 3471
+3412 get_to[curator,cryo] -> m_already_there 3413
+3408 do_move_step[curator,tunnel,cryo] -> m_move_carrying_exec 3409 3411
+3398 m_drive_to_via_splitted_1[curator] -> _splitting_method_m_drive_to_via_splitted_1 3399 3408
+3372 get_to[curator,cryo] -> m_drive_to_via 3398 3412
+3366 do_move_step[curator,hall_a,tunnel] -> m_move_carrying_exec 3367 3369
+3346 m_drive_to_via_splitted_1[curator] -> _splitting_method_m_drive_to_via_splitted_1 3347 3366
+3332 get_to[curator,cryo] -> m_drive_to_via 3346 3372
+3323 get_to[curator,hall_a] -> m_already_there 3324
+3149 do_move_step[curator,tunnel,hall_a] -> m_move_freely_exec 3150 3154
+3110 m_drive_to_via_splitted_1[curator] -> _splitting_method_m_drive_to_via_splitted_1 3111 3149
+3074 get_to[curator,hall_a] -> m_drive_to_via 3110 3323
+3068 do_move_step[drone1,pods_room,tunnel] -> m_move_carrying_exec 3069 3417
+3060 m_drive_to_via_splitted_1[drone1] -> _splitting_method_m_drive_to_via_splitted_1 3061 3068
+2752 get_to[drone1,hall_b] -> m_drive_to_via 3060 3419
+2742 pick-up[drone1,pod1,pods_room,n0,n1] -> _method_for_multiple_expansions_of_pick-up|instance_3 2746
+2739 get_to[drone1,pods_room] -> m_already_there 2740
+2728 do_move_step[drone1,tunnel,pods_room] -> m_move_freely_exec 2729 2733
+2688 m_drive_to_via_splitted_1[drone1] -> _splitting_method_m_drive_to_via_splitted_1 2689 2728
+1375 get_to[drone1,pods_room] -> m_drive_to_via 2688 2739
+1367 do_move_step[curator,entrance,tunnel] -> m_move_freely_exec 1368 3070
+1349 m_drive_to_via_splitted_1[curator] -> _splitting_method_m_drive_to_via_splitted_1 1350 1367
+342 get_to[curator,hall_a] -> m_drive_to_via 1349 3074
+337 do_move_step[drone1,entrance,tunnel] -> m_move_freely_exec 338 1371
+335 m_drive_to_via_splitted_1[drone1] -> _splitting_method_m_drive_to_via_splitted_1 336 337
+2 get_to[drone1,pods_room] -> m_drive_to_via 335 1375
+0 __top[] -> <<<<<<<<<<<<__top_method;deliver_fragile[drone1,art_beta,pod1,hall_b,pods_room,stasis,pods_room,n0,n1,n2];m_deliver_frag;1;0,-1,-2,-3,-4,-5,-6,-7,-8,-9,-10,-11,-12,-13,-14,2>;unload-pod[drone1,art_beta,pod1,stasis,n0,n1];_method_for_multiple_expansions_of_unload-pod|instance_1;10;0,1,2,3,4,5,6,7,8,9,-1,11,12,13,14,15>;drop[drone1,pod1,pods_room,n1,n0];_method_for_multiple_expansions_of_drop|instance_2;14;0,1,2,3,4,5,6,7,8,9,10,11,12,13,-1,15>;drop[drone1,art_beta,stasis,n1,n0];_method_for_multiple_expansions_of_drop|instance_1;11;0,1,2,3,4,5,6,7,8,9,10,-1,12,13,14,15>;drop[drone1,pod1,stasis,n1,n0];_method_for_multiple_expansions_of_drop|instance_2;9;0,1,2,3,4,5,6,7,8,-1,10,11,12,13,14,15>;drop[drone1,pod1,hall_b,n2,n1];_method_for_multiple_expansions_of_drop|instance_2;5;0,1,2,3,4,-1,6,7,8,9,10,11,12,13,14,15>;pick-up[drone1,art_beta,hall_b,n1,n2];_method_for_multiple_expansions_of_pick-up|instance_2;4;0,1,2,3,-1,5,6,7,8,9,10,11,12,13,14,15>;deliver_standard[drone1,mars_core,cryo,stasis,n0,n1];m_deliver_std;15;0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,-1,-2,-3,-4>;drop[drone1,mars_core,stasis,n1,n0];_method_for_multiple_expansions_of_drop|instance_2;18;0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,-1>;deliver_standard[curator,art_alpha,hall_a,cryo,n0,n1];m_deliver_std_cooled;0;-1,-2,-3,-4,-5,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18>;drop[curator,art_alpha,cryo,n1,n0];_method_for_multiple_expansions_of_drop|instance_2;4;0,1,2,3,-1,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22>;pick-up[curator,art_alpha,hall_a,n0,n1];_method_for_multiple_expansions_of_pick-up|instance_3;1;0,-1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22> 342 3327 3329 3332 3416 2 2742 2752 3473 3474 3475 3477 3481 3537 3538 3539 3541 3545 3589 3592 3643 3647 3691
+<==

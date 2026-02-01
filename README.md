@@ -84,24 +84,37 @@ planutils run optic domain_4.pddl problem_4.pddl
 
 ## Running PlanSys2
 ```bash
-cd /root/Automated_Planning/plansys2_ws
+cd /root/plansys2_ws
+```
+```bash
 colcon build --symlink-install --packages-select imv_problem_5
 source install/setup.bash
-ros2 launch imv_problem_5 imv_problem_5.launch.py
+ros2 launch imv_problem_5 solution.launch.py
 ```
 
 Inside terminal 2:
 
 ```bash
-docker exec -it imv_container bash
+docker exec -it automated_planning bash
 ```
 
 ```bash
-source ~/plansys2_ws/install/setup.bash
+cd /root/plansys2_ws
+```
+
+```bash
+source install/setup.bash
+```
+```bash
 ros2 run plansys2_terminal plansys2_terminal
 ```
 
 ```bash
-ros2 run plansys2_terminal plansys2_terminal < /root/Automated_Planning/plansys2_ws/src/imv_problem_5/pddl/setup_problem.txt
+source src/imv_problem_5/pddl/setup_problem.txt
 ```
-
+```bash
+get plan
+```
+```bash
+run
+```
